@@ -2,7 +2,7 @@ venv
 .env
 .env.example
 
-*__init__.py
+
 *__pycache__
 *docker-compose.yml
 *docker-compose.prod.yml
