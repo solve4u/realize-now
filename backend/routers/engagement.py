@@ -100,6 +100,7 @@ async def get_engagement_dashboard(
         hours_completed,
         hours_required,
         hours_remaining,
+        total_hours_completed,
         completion_percentage,
         risk_ratio,
         risk_level,
@@ -169,6 +170,7 @@ async def get_engagement_dashboard(
                 "sessions": {
                     "completed_this_week": row["sessions_completed_this_week"],
                     "hours_completed": float(row["hours_completed"]) if row["hours_completed"] else 0.0,
+                    "total_hours_completed_this_week": float(row["total_hours_completed"]) if row["total_hours_completed"] else 0.0,
                     "hours_required": float(row["hours_required"]) if row["hours_required"] else None,
                     "hours_remaining": float(row["hours_remaining"]) if row["hours_remaining"] else 0.0,
                     "completion_percentage": float(row["completion_percentage"]) if row["completion_percentage"] else 0.0,
