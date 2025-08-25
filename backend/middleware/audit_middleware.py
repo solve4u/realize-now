@@ -303,8 +303,8 @@ class AuditMiddleware(BaseHTTPMiddleware):
                     kwargs['data_exported'],
                     kwargs['request_body_hash'],
                     json.dumps(dict(kwargs['request'].query_params)) if kwargs['request'].query_params else None,
-                    None  # additional_context - can be extended later
+                    None  
                 )
         except Exception as e:
-            # Log audit failures to application logs (but don't fail the request)
+            # Log audit failures to application logs
             print(f"Audit logging failed: {str(e)}")

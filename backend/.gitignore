@@ -7,7 +7,6 @@ venv
 *docker-compose.yml
 *docker-compose.prod.yml
 *Dockerfile
-audit.py
 *Dockerfile.prod
 README.Docker.md
 .dockerignore

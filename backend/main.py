@@ -50,10 +50,10 @@ app.add_middleware(
 
 # Include routers
 app.include_router(auth.router)
-from routers import user_management, patient_management, locations, data_import, engagement
+from routers import patient_management, locations, data_import, engagement
 
 
-app.include_router(user_management.router)
+#app.include_router(user_management.router)
 app.include_router(patient_management.router)
 app.include_router(locations.router)
 app.include_router(data_import.router)
