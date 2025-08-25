@@ -1,0 +1,17 @@
+venv
+.env
+.env.example
+
+*__init__.py
+*__pycache__
+*docker-compose.yml
+*docker-compose.prod.yml
+*Dockerfile
+audit.py
+*Dockerfile.prod
+README.Docker.md
+.dockerignore
+
+email.py
+user_management.py
+invitation.py
