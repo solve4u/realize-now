@@ -37,7 +37,9 @@ jobs:
 
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: |
+          cd backend
+          zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -81,3 +83,6 @@ jobs:
           app-name: 'realizenow'
           slot-name: 'Production'
           
+      - name: Set startup command for FastAPI
+        run: |
+          az webapp config set --resource-group realize-hippa --name realizenow --startup-file "uvicorn main:app --host 0.0.0.0 --port 8000"
