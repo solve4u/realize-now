@@ -79,5 +79,5 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'realizenow'
-          slot-name: 'production'
+          slot-name: 'Production'
           
