@@ -265,7 +265,7 @@ async def get_unassigned_patients(
             await conn.execute("SELECT set_config('app.current_user_org_id', $1, true)", str(current_user.organization_id))
 
         patients = await conn.fetch("""
-            SELECT * FROM patient_assignment_overview 
+            SELECT * FROM patient_dashboard_enhanced 
             WHERE assignment_status = 'pending'
             ORDER BY created_at DESC
         """)

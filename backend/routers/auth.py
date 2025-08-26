@@ -150,13 +150,7 @@ async def create_user(
 
 @router.post("/forgot-password")
 async def forgot_password(request: ForgotPasswordRequest):
-    """Forgot password endpoint - placeholder for now."""
-    # TODO: Implement forgot password functionality
-    # This would typically:
-    # 1. Check if email exists
-    # 2. Generate reset token
-    # 3. Send email with reset link
-    # 4. Store reset token in database with expiration
+    """Forgot password endpoint - Not Implemented. Need to use an email client. Currently in progress."""
     
     return {"message": "If the email exists, a password reset link will be sent"}
 
