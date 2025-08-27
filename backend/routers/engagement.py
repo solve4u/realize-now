@@ -152,6 +152,8 @@ async def get_engagement_dashboard(
             first_name,
             last_name,
             mr,
+            email,
+            phone,
             organization_id,
             location_id,
             location_name,
@@ -172,6 +174,7 @@ async def get_engagement_dashboard(
             total_hours_completed,
             completion_percentage,
             risk_ratio,
+            average_risk_level,
             risk_level,
             tier_description,
             recommended_actions,
@@ -180,7 +183,7 @@ async def get_engagement_dashboard(
             engagement_status,
             engagement_category,
             risk_category
-        FROM get_patient_engagement_dashboard_filtered({start_date_param}::DATE, {end_date_param}::DATE)
+        FROM get_patient_engagement_dashboard_unified({start_date_param}::DATE, {end_date_param}::DATE)
         {where_clause}
         ORDER BY 
             CASE assignment_status WHEN 'assigned' THEN 1 ELSE 2 END,
@@ -223,6 +226,8 @@ async def get_engagement_dashboard(
                 "first_name": row["first_name"],
                 "last_name": row["last_name"],
                 "mr": row["mr"],
+                "email": row["email"],
+                "phone": row["phone"],
                 "organization_id": row["organization_id"],
                 "location": {
                     "id": row["location_id"],
@@ -257,6 +262,7 @@ async def get_engagement_dashboard(
                     "description": row["tier_description"],
                     "recommended_actions": row["recommended_actions"],
                     "color": row["color"],
+                    "average_risk_level": row["average_risk_level"],
                     "auto_flag_for_followup": row["auto_flag_for_followup"]
                 },
                 "engagement": {
