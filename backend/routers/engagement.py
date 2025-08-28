@@ -210,7 +210,7 @@ async def get_engagement_dashboard(
             else:
                 count_query = f"""
                 SELECT COUNT(*) as total 
-                FROM get_patient_engagement_dashboard_filtered({start_date_param}::DATE, {end_date_param}::DATE)
+                FROM get_patient_engagement_dashboard_unified({start_date_param}::DATE, {end_date_param}::DATE)
                 {where_clause}
                 """
             
@@ -379,7 +379,7 @@ async def get_engagement_summary(
             AVG(CASE WHEN assignment_status = 'assigned' AND completion_percentage IS NOT NULL THEN completion_percentage END) as avg_completion_percentage,
             SUM(CASE WHEN assignment_status = 'assigned' THEN hours_completed ELSE 0 END) as total_hours_completed,
             SUM(CASE WHEN assignment_status = 'assigned' THEN sessions_completed_this_week ELSE 0 END) as total_sessions_completed
-        FROM get_patient_engagement_dashboard_filtered({start_date_param}::date, {end_date_param}::date) 
+        FROM get_patient_engagement_dashboard_unified({start_date_param}::date, {end_date_param}::date) 
         {where_clause}
         """
     
