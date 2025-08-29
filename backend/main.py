@@ -59,11 +59,6 @@ app.include_router(data_import.router)
 app.include_router(engagement.router)
 #app.include_router(audit.router)
 
-# Debug endpoint to test audit logging
-@app.get("/test-audit")
-async def test_audit():
-    return {"message": "This should trigger audit logging", "timestamp": "now"}
-
 
 @app.get("/health")
 async def health_check():
