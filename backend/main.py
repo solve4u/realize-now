@@ -35,7 +35,6 @@ app = FastAPI(
 )
 
 
-# Audit middleware (only runs in production)
 enable_audit = os.getenv('ENABLE_AUDIT_LOGGING', 'false').lower() == 'true'
 app.add_middleware(AuditMiddleware, enable_audit=enable_audit)
 
@@ -60,9 +59,11 @@ app.include_router(data_import.router)
 app.include_router(engagement.router)
 #app.include_router(audit.router)
 
-@app.get("/")
-async def root():
-    return {"message": "REALIZE Healthcare Management API", "version": "1.0.0"}
+# Debug endpoint to test audit logging
+@app.get("/test-audit")
+async def test_audit():
+    return {"message": "This should trigger audit logging", "timestamp": "now"}
+
 
 @app.get("/health")
 async def health_check():

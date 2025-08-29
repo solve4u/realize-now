@@ -148,6 +148,8 @@ async def get_import_records(
     status: Optional[ImportStatus] = Query(None, description="Filter by import status"),
     service_type: Optional[ServiceType] = Query(None, description="Filter by service type"),
     file_name: Optional[str] = Query(None, description="Filter by file name"),
+    start_date: Optional[date] = Query(None, description="Filter records from this date (inclusive)"),
+    end_date: Optional[date] = Query(None, description="Filter records to this date (inclusive)"),
     limit: int = Query(default=100, le=200, description="Number of records to return"),
     offset: int = Query(default=0, description="Number of records to skip"),
     current_user: UserResponse = Depends(get_admin_user)
@@ -164,6 +166,12 @@ async def get_import_records(
         params = []
         param_count = 0
         
+        # Default to last 2 weeks if no date filters provided
+        if not start_date and not end_date:
+            from datetime import timedelta
+            end_date = datetime.now().date()
+            start_date = end_date - timedelta(days=14)
+        
         if status:
             param_count += 1
             where_conditions.append(f"status = ${param_count}")
@@ -178,6 +186,16 @@ async def get_import_records(
             param_count += 1
             where_conditions.append(f"file_name ILIKE ${param_count}")
             params.append(f"%{file_name}%")
+        
+        if start_date:
+            param_count += 1
+            where_conditions.append(f"DATE(imported_at) >= ${param_count}")
+            params.append(start_date)
+        
+        if end_date:
+            param_count += 1
+            where_conditions.append(f"DATE(imported_at) <= ${param_count}")
+            params.append(end_date)
         
         where_clause = "WHERE " + " AND ".join(where_conditions) if where_conditions else ""
         
