@@ -633,7 +633,7 @@ async def get_programs(
         if current_user.role == UserRole.SYSTEM_ADMIN:
             programs = await conn.fetch("""
                 SELECT * FROM programs 
-                WHERE status = 'active'
+                WHERE is_deleted IS NULL OR is_deleted = false
                 ORDER BY name
             """)
         else:
@@ -646,7 +646,7 @@ async def get_programs(
             
             programs = await conn.fetch("""
                 SELECT * FROM programs 
-                WHERE status = 'active' AND organization_id = $1
+                WHERE is_deleted IS NULL OR is_deleted = false AND organization_id = $1
                 ORDER BY name
             """, current_user.organization_id)
         
@@ -807,10 +807,10 @@ async def delete_program(
                 detail=f"Cannot delete program: {patient_count} patients are currently assigned to this program"
             )
 
-        # Soft delete - set to inactive since 'deleted' is not allowed by constraint
+        # Soft delete - set is_deleted to true
         await conn.execute("""
             UPDATE programs 
-            SET status = 'inactive', updated_at = NOW()
+            SET is_deleted = true, updated_at = NOW()
             WHERE program_id = $1
         """, program_id)
 
